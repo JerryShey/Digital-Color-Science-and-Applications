@@ -1,2 +1,5 @@
-﻿  main.cpp
-LINK : fatal error LNK1561: 必須定義進入點
+﻿  MyBMP.cpp
+  main.cpp
+  正在產生程式碼...
+  Color Transfer.vcxproj -> C:\Users\Tung\Desktop\學校資料\作業\Digital-Color-Science-and-Applications\Hw2\Debug\Color Transfer.exe
+  Color Transfer.vcxproj -> C:\Users\Tung\Desktop\學校資料\作業\Digital-Color-Science-and-Applications\Hw2\Debug\Color Transfer.pdb (Partial PDB)
