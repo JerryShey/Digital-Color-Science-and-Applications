@@ -1,6 +1,6 @@
 # Digital Color Science and Applications
 
-## Homewrok 1 
+## Homework 1 
 ### Dateline 2017.03.21
 * Read a BMP photo and write all pixel in a csv file.
 * Analyze Red vs Green, Green vs Blue, Red vs Blue with excel
