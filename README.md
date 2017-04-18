@@ -19,7 +19,7 @@
 
 ## Homework 4
 ### Dateline: 2017.04.20
-* Give seed 100 to random an array to conceal secret number in test.bmp.
+Give seed 100 to random an array to conceal secret number in test.bmp and decode it.
 
 ```c++
 void EMD_conceal(int n, int d, int* G)
