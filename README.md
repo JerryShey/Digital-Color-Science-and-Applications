@@ -14,3 +14,5 @@
 
 ## Homework 3
 ### Dateline: 2017.04.10
+* Using target and result images, transfer result image to source image
+* Calculate the PSNR between result and source image.
