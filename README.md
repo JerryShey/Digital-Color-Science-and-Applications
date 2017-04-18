@@ -16,3 +16,9 @@
 ### Dateline: 2017.04.10
 * Using target and result images, transfer result image to source image
 * Calculate the PSNR between result and source image.
+
+## Homework 4
+### Dateline: 2017.04.20
+* Give seed 100 to random an array to conceal secret number in test.bmp
+* Give n (groupNum)
+* `void EMD_conceal(int n, int d, int* G)`
