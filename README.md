@@ -21,11 +21,11 @@
 ### Dateline: 2017.04.20
 * Give seed 100 to random an array to conceal secret number in test.bmp.
 * `void EMD_conceal(int n, int d, int* G)`
-..* d is the bit need to conceal.
-..* G is the array's point which hide the secret number b.
+⋅⋅* d is the bit need to conceal.
+⋅⋅* G is the array's point which hide the secret number b.
 * `void EMD_decode(int n, int* G, int* result)`
-..* G is the array's point which has hiden the secret number.
-..* decode G and save all secret numbers in result.
+⋅⋅* G is the array's point which has hiden the secret number.
+⋅⋅* decode G and save all secret numbers in result.
 
 ## Homework 5
 ### Dateline: 2017.04.XX
