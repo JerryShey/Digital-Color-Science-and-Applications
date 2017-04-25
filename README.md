@@ -9,7 +9,7 @@
 ## Homework 2 
 ### Dateline: 2017.03.28
 ```c++
-Default string imgName[6] = {"01.bmp", "02.bmp", "03.bmp", "04.bmp", "05.bmp", "06.bmp"};
+string imgName[6] = {"01.bmp", "02.bmp", "03.bmp", "04.bmp", "05.bmp", "06.bmp"};
 ```
 * Analyze source and target image.
 * Using color transfer to transfer source image.
