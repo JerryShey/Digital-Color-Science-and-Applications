@@ -18,6 +18,7 @@ void EMD_decode(int n, int* G, int* result);
 
 int main(int argc, char** argv)
 {
+	std::cout << sin(90*(3.1415926/180.0));
 	BMP testImg, outputImg;
 	int secret[secretNum], nonsecret[100];
 	int n = groupNum, cnt = 0;
