@@ -7,7 +7,7 @@
 #include <math.h>
 
 #define groupNum 4
-
+#define imgNumbers 7
 using namespace std;
 
 void calcMean(BMP, float*, float*, float*);
@@ -16,7 +16,7 @@ float colorTransfer(float, float, float, float, float);
 float calcPSNR(BMP, BMP);
 
 
-string imgName[6] = {"01.bmp", "02.bmp", "03.bmp", "04.bmp", "05.bmp", "06.bmp"};
+string imgName[imgNumbers] = { "01.bmp", "02.bmp", "03.bmp", "04.bmp", "05.bmp", "06.bmp", "07.bmp" };
 int main(int argc, char** argv)
 {
 	float SRavg = 0.0, SGavg = 0.0, SBavg = 0.0;
@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 	BMP tranferImg, targetImg, sourceImg;
 	BMP Output;
 
-	for (int x = 0; x < 6; x++) {
+	for (int x = 0; x < imgNumbers; x++) {
 		cout << x+1 << ".\n";
 
 		string path = "..\\Project1\\Result Img\\" + imgName[x];	//讀取的圖檔名字

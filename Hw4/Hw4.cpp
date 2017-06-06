@@ -5,10 +5,12 @@
 #include <sstream>
 #include "MyBMP.h"
 #include <math.h>
-
-#define groupNum 4
-#define secretNum 20
-
+/*
+std::cout << "[" << *G;
+for(int j = 0; j < n; j++)
+std::cout << ", " <<*(G+j);
+std::cout << "]";
+*/
 void calcMean(BMP, float*, float*, float*);
 void calcSD(BMP, float, float, float, float*, float*, float*);
 float colorTransfer(float, float, float, float, float);
@@ -18,20 +20,34 @@ void EMD_decode(int n, int* G, int* result);
 
 int main(int argc, char** argv)
 {
-	std::cout << sin(90*(3.1415926/180.0));
+	int n = 0, secretNum = 0;
 	BMP testImg, outputImg;
-	int secret[secretNum], nonsecret[100];
-	int n = groupNum, cnt = 0;
+	std::fstream file;
 
 	testImg.ReadFromFile("test.bmp");
 	outputImg.SetSize(testImg.TellWidth(), testImg.TellHeight());
 	outputImg.SetBitDepth(24);
 
+	std::cout << "請輸入n(" << "2~" << testImg.TellWidth()*testImg.TellHeight() << "):";
+	std::cin >> n;
+	std::cout << "\n請輸入數量(" << 1 << "~" << testImg.TellWidth()*testImg.TellHeight() / n << "):";
+	std::cin >> secretNum;
+
+	while (secretNum < 0 || secretNum > testImg.TellWidth()*testImg.TellHeight() / n){
+		std::cout << "\n請輸入數量(" << 1 << "~" << testImg.TellWidth()*testImg.TellHeight() / n << "):";
+		std::cin >> secretNum;
+	}
+
+
+	int *secret = new int[secretNum];
+	int *nonsecret = new int[secretNum];
+	int cnt = 0;
+
 	int size = testImg.TellWidth()*testImg.TellHeight() * 3 + 1;
 	int *test = new int[size];
 
 	srand(100);
-	
+
 	for (int i = 0; i < secretNum; i++)
 		secret[i] = (int)((2 * n)*(double)rand() / RAND_MAX);
 
@@ -46,9 +62,14 @@ int main(int argc, char** argv)
 			*(test + (cnt++)) = NewPixel.Blue;
 		}
 	}
+	file.open("secret.txt");
+	for (int i = 0; i < secretNum; i++){
 
-	for (int i = 0; i < secretNum; i++)
 		EMD_conceal(n, secret[i], test + i*n);
+		file << secret[i] << std::endl;
+
+	}
+	file.close();
 
 	cnt = 0;
 	for (int i = 0; i < testImg.TellWidth(); i++)
@@ -64,14 +85,20 @@ int main(int argc, char** argv)
 			outputImg.SetPixel(i, j, NewPixel);
 		}
 	}
-	
-	for (int i = 0; i < secretNum; i++)
-		EMD_decode(n, test+i*n, nonsecret+i);
 
+	file.open("decode.txt");
+	for (int i = 0; i < secretNum; i++){
+		EMD_decode(n, test + i*n, nonsecret + i);
+		file << nonsecret[i] << std::endl;
+	}
+	file.close();
 
 	delete test;
 	outputImg.WriteToFile("outputImg.bmp");
 
+	std::cout << calcPSNR(outputImg, testImg);
+
+	
 	std::cout << "請輸入任意鍵結束" << std::endl;
 	getchar();
 	return 0;
@@ -109,7 +136,7 @@ void calcSD(BMP img, float avgR, float avgG, float avgB, float* R, float* G, flo
 			tempR = 0.0;	tempG = 0.0;	tempB = 0.0;
 
 			tempR = NewPixel.Red - avgR;
-			*R +=tempR*tempR;
+			*R += tempR*tempR;
 			tempG = NewPixel.Green - avgG;
 			*G += tempG*tempG;
 			tempB = NewPixel.Blue - avgB;
@@ -161,6 +188,7 @@ float calcPSNR(BMP Simg, BMP RSimg){
 }
 
 void EMD_conceal(int n, int d, int* G){
+
 	int f = 0;
 	for (int i = 0; i < n; i++){
 		f += *(G + i) * (i + 1);
@@ -169,14 +197,19 @@ void EMD_conceal(int n, int d, int* G){
 	int s = (d - f) % (2 * n + 1);
 	if (s < 0)
 		s += (2 * n + 1);
-	if (s <= n){
+
+	if (s == 0)
+		return;
+	else if (s <= n){
 		*(G + (s - 1)) += 1;
 		if (*(G + (s - 1))>255){
 			*(G + (s - 1)) = 254;
 			EMD_conceal(n, d, G);
 		}
-		else
+
+		else{
 			return;
+		}
 	}
 	else{
 		int index = 2 * n + 1 - s;
@@ -185,8 +218,9 @@ void EMD_conceal(int n, int d, int* G){
 			*(G + (index - 1)) = 1;
 			EMD_conceal(n, d, G);
 		}
-		else
+		else{
 			return;
+		}
 	}
 }
 
@@ -194,7 +228,6 @@ void EMD_decode(int n, int* G, int* result){
 	int f = 0;
 	for (int i = 0; i < n; i++){
 		f += *(G + i) * (i + 1);
-		
 	}
 	*(result) = f % (2 * n + 1);
 }

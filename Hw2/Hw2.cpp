@@ -7,15 +7,14 @@
 #include <math.h>
 
 #define groupNum 4
-
+#define imgNumbers 7
 using namespace std;
 
 void calcMean(BMP, float*, float*, float*);
 void calcSD(BMP, float, float, float, float*, float*, float*);
 float colorTransfer(float, float, float, float, float);
-float calcPSNR(BMP, BMP);
 
-string imgName[6] = {"01.bmp", "02.bmp", "03.bmp", "04.bmp", "05.bmp", "06.bmp"};
+string imgName[imgNumbers] = { "01.bmp", "02.bmp", "03.bmp", "04.bmp", "05.bmp", "06.bmp", "07.bmp" };
 
 int main(int argc, char** argv)
 {
@@ -26,8 +25,8 @@ int main(int argc, char** argv)
 	BMP targetImg, sourceImg;
 	BMP Output;
 
-	for (int x = 0; x < 6; x++) {
-		cout << x+1 << ".\n";
+	for (int x = 0; x < imgNumbers; x++) {
+		cout << x + 1 << ".\n";
 
 		string path;
 		path = "..\\Project1\\Target Img\\" + imgName[x];
@@ -62,7 +61,7 @@ int main(int argc, char** argv)
 		cout << "\n\t" << SRsd << "\t" << SGsd << "\t" << SBsd;
 		cout << "\nTarget:\n\t" << TRavg << "\t" << TGavg << "\t" << TBavg;
 		cout << "\n\t" << TRsd << "\t" << TGsd << "\t" << TBsd << endl;
-		
+
 		path = "..\\Project1\\Result Img\\" + imgName[x];
 		Output.WriteToFile(path.c_str());  //儲存的圖檔名字
 	}
@@ -103,7 +102,7 @@ void calcSD(BMP img, float avgR, float avgG, float avgB, float* R, float* G, flo
 			tempR = 0.0;	tempG = 0.0;	tempB = 0.0;
 
 			tempR = NewPixel.Red - avgR;
-			*R +=tempR*tempR;
+			*R += tempR*tempR;
 			tempG = NewPixel.Green - avgG;
 			*G += tempG*tempG;
 			tempB = NewPixel.Blue - avgB;
@@ -131,29 +130,5 @@ float colorTransfer(float Savg, float Ssd, float Tavg, float Tsd, float S) {
 		result = 255;
 	if (result < 0)
 		result = 0;
-	return result;
-}
-
-float calcPSNR(BMP Simg, BMP RSimg){
-	float result = 0.0;
-	int temp = 0;
-	for (int i = 0; i < Simg.TellHeight(); i++){
-		for (int j = 0; j < Simg.TellWidth(); j++){
-			RGBApixel SPixel = Simg.GetPixel(j, i);  //讀取單一個像素結構。P.S.也可以自行改成先讀取成(R,G,B)陣列後，再做應用。 
-			RGBApixel RSPixel = RSimg.GetPixel(j, i);
-
-			//----------------------------在這部分做像素的修改--------------------------------//
-			temp = SPixel.Red - RSPixel.Red;
-			result += temp * temp;
-			temp = SPixel.Green - RSPixel.Green;
-			result += temp * temp;
-			temp = SPixel.Blue - RSPixel.Blue;
-			result += temp * temp;
-			//----------------------------修改影像結束--------------------------------//
-
-		}
-	}
-	result = result / (float)Simg.TellHeight() / (float)Simg.TellWidth() / 3.0;
-	result = 10 * log10(255 * 255 / result);
 	return result;
 }
