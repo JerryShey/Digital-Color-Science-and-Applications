@@ -36,5 +36,6 @@ void EMD_decode(int n, int* G, int* result)
 > G is the array's point which has hiden the secret number.<br />
 > Decode G and save all secret numbers in result.
 
-## Homework 5
-### Dateline: 2017.04.XX
+## Final Demo
+* Find the best weight(w) for color transfer.
+* Show 100 photos with weight between 1.0 to 0.0.
