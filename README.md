@@ -8,6 +8,9 @@
 
 ## Homework 2 
 ### Dateline: 2017.03.28
+```c++
+string imgName[6] = {"01.bmp", "02.bmp", "03.bmp", "04.bmp", "05.bmp", "06.bmp"};
+```
 * Analyze source and target image.
 * Using color transfer to transfer source image.
 * Write to result image.
@@ -33,5 +36,6 @@ void EMD_decode(int n, int* G, int* result)
 > G is the array's point which has hiden the secret number.<br />
 > Decode G and save all secret numbers in result.
 
-## Homework 5
-### Dateline: 2017.04.XX
+## Final Demo
+* Find the best weight(w) for color transfer.
+* Show 100 photos with weight between 1.0 to 0.0.
